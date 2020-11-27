@@ -1,8 +1,8 @@
 import { Router } from "express";
 
-import UserMap from "../mappers/UserMap";
+import UserMap from "@modules/users/mappings/UserMap";
 
-import AuthenticateUserService from "../services/AuthenticateUserService";
+import AuthenticateUserService from "@modules/users/services/AuthenticateUserService";
 
 const sessionsRouter = Router();
 

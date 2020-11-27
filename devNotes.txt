@@ -16,6 +16,7 @@ yarn add multer
 yarn add -D @types/multer
 yarn add express-async-errors
 yarn add cors
+yarn add tsconfig-paths -D // permite ler os @modules, configurado no tsconfig.json
 
 Migrations Criadas
     yarn typeorm migration:create -n CreateAppointments // Criando a migration

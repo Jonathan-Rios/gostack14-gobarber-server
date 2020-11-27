@@ -1,4 +1,4 @@
-import User from "../models/User";
+import User from "../infra/typeorm/entities/User";
 
 export default class UserMap {
 
