@@ -1,30 +1,35 @@
-import { getRepository } from "typeorm";
-import path from "path";
-import fs from "fs";
-import uploadConfig from "@config/upload";
+import path from 'path';
+import fs from 'fs';
+import uploadConfig from '@config/upload';
+import { injectable, inject } from 'tsyringe';
 
-import AppError from "@shared/errors/AppError";
+import AppError from '@shared/errors/AppError';
 
-import User from "../infra/typeorm/entities/User";
+import User from '../infra/typeorm/entities/User';
+import IUsersRepository from '../repositories/IUsersRepository';
 
-interface Request {
+interface IRequest {
   user_id: string;
   avatarFileName: string;
 }
 
+@injectable()
 class UpdateUserAvatarService {
-  public async execute({ user_id, avatarFileName }: Request): Promise<User> {
-    const usersRepository = getRepository(User);
+  constructor(
+    @inject('UsersRepository')
+    private usersRepository: IUsersRepository,
+  ) {}
 
-    const user = await usersRepository.findOne(user_id);
+  public async execute({ user_id, avatarFileName }: IRequest): Promise<User> {
+    const user = await this.usersRepository.findById(user_id);
 
     if (!user) {
-      throw new AppError("Only authenticaded users can change avatar.", 401);
+      throw new AppError('Only authenticaded users can change avatar.', 401);
     }
 
     if (user.avatar) {
       const userAvatarFilePath = path.join(uploadConfig.directory, user.avatar);
-      const userAvatarFileExists = await fs.promises.stat(userAvatarFilePath);//file system, verifica se existe o arquivo.
+      const userAvatarFileExists = await fs.promises.stat(userAvatarFilePath); // file system, verifica se existe o arquivo.
 
       if (userAvatarFileExists) {
         await fs.promises.unlink(userAvatarFilePath); // deleta o arquivo
@@ -33,7 +38,7 @@ class UpdateUserAvatarService {
 
     user.avatar = avatarFileName;
 
-    await usersRepository.save(user);// (.save) - Serve para criar ou atualizar
+    await this.usersRepository.save(user); // (.save) - Serve para criar ou atualizar
 
     return user;
   }
