@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
+import { classToClass } from 'class-transformer';
 
-import UserMap from '@modules/users/mappings/UserMap';
 import AuthenticateUserService from '@modules/users/services/AuthenticateUserService';
 
 export default class SessionsController {
@@ -15,8 +15,6 @@ export default class SessionsController {
       password,
     });
 
-    const mappedUser = UserMap.toDTO(user);
-
-    return response.json({ user: mappedUser, token });
+    return response.json({ user: classToClass(user), token });
   }
 }
