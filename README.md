@@ -1,7 +1,7 @@
 # Para executar o projeto do zero
     Rode o comando yarn, para instalar todas as dependências.
 
-    Instale os bancos no Docker, e 
+    Instale os bancos no Docker
 
 ## Instalando PostGres no Docker
     docker run --name gostack-postgres -e POSTGRES_PASSWORD=docker -p 5432:5432 -d postgres
