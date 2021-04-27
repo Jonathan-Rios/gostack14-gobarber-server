@@ -17,28 +17,28 @@ import '@shared/container';
 
 const app = express();
 
-app.use(rateLimiter);
 app.use(cors());
 app.use(express.json());
 app.use('/files', express.static(uploadConfig.uploadFolder));
+app.use(rateLimiter); // colocando depois de files (permite que não limite a req de imagens, que geralmente se faz bastante)
 app.use(routes);
 
 app.use(errors());
 
-// app.use((err: Error, request: Request, response: Response, _: NextFunction) => {
-//   // Precisa ser depois das rotas.
-//   if (err instanceof AppError) {
-//     return response.status(err.statusCode).json({
-//       status: 'error',
-//       message: err.message,
-//     });
-//   }
-//   rateLimiter;
-//   return response.status(500).json({
-//     status: 'error',
-//     message: 'Internal server error',
-//   });
-// });
+app.use((err: Error, request: Request, response: Response, _: NextFunction) => {
+  // Precisa ser depois das rotas.
+  if (err instanceof AppError) {
+    return response.status(err.statusCode).json({
+      status: 'error',
+      message: err.message,
+    });
+  }
+  rateLimiter;
+  return response.status(500).json({
+    status: 'error',
+    message: 'Internal server error',
+  });
+});
 
 app.get('/', (request, response) => {
   return response.json({ message: 'Hello World' });
