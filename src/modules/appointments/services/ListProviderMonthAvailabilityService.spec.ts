@@ -13,76 +13,85 @@ describe('ListProviderMonthAvailability', () => {
   });
 
   it('should be able to list the month availability from provider', async () => {
+    /* Necessário criar uma data futura para teste, 
+    para não conflitar a data que o teste for rodado ( Mês já ter passado, ser um dia anterior ou algo do tipo )*/
+
+    const testDate = new Date();
+    testDate.setFullYear(testDate.getFullYear() + 1, 0, 5);
+
+    const year = testDate.getFullYear();
+    const month = testDate.getMonth();
+
     await fakeAppointmentsRepository.create({
       provider_id: 'provider_id',
       user_id: 'user-id',
-      date: new Date(2020, 4, 20, 8, 0, 0), // Mês começa no Zero
+      date: new Date(year, month, 20, 8, 0, 0), // Mês começa no Zero
     });
 
     await fakeAppointmentsRepository.create({
       provider_id: 'provider_id',
       user_id: 'user-id',
-      date: new Date(2020, 4, 20, 9, 0, 0), // Mês começa no Zero
+      date: new Date(year, month, 20, 9, 0, 0), // Mês começa no Zero
     });
 
     await fakeAppointmentsRepository.create({
       provider_id: 'provider_id',
       user_id: 'user-id',
-      date: new Date(2020, 4, 20, 10, 0, 0), // Mês começa no Zero
+      date: new Date(year, month, 20, 10, 0, 0), // Mês começa no Zero
     });
 
     await fakeAppointmentsRepository.create({
       provider_id: 'provider_id',
       user_id: 'user-id',
-      date: new Date(2020, 4, 20, 11, 0, 0), // Mês começa no Zero
+      date: new Date(year, month, 20, 11, 0, 0), // Mês começa no Zero
     });
 
     await fakeAppointmentsRepository.create({
       provider_id: 'provider_id',
       user_id: 'user-id',
-      date: new Date(2020, 4, 20, 12, 0, 0), // Mês começa no Zero
+      date: new Date(year, month, 20, 12, 0, 0), // Mês começa no Zero
     });
 
     await fakeAppointmentsRepository.create({
       provider_id: 'provider_id',
       user_id: 'user-id',
-      date: new Date(2020, 4, 20, 13, 0, 0), // Mês começa no Zero
+      date: new Date(year, month, 20, 13, 0, 0), // Mês começa no Zero
     });
 
     await fakeAppointmentsRepository.create({
       provider_id: 'provider_id',
       user_id: 'user-id',
-      date: new Date(2020, 4, 20, 14, 0, 0), // Mês começa no Zero
+      date: new Date(year, month, 20, 14, 0, 0), // Mês começa no Zero
     });
 
     await fakeAppointmentsRepository.create({
       provider_id: 'provider_id',
       user_id: 'user-id',
-      date: new Date(2020, 4, 20, 15, 0, 0), // Mês começa no Zero
+      date: new Date(year, month, 20, 15, 0, 0), // Mês começa no Zero
     });
 
     await fakeAppointmentsRepository.create({
       provider_id: 'provider_id',
       user_id: 'user-id',
-      date: new Date(2020, 4, 20, 16, 0, 0), // Mês começa no Zero
+      date: new Date(year, month, 20, 16, 0, 0), // Mês começa no Zero
     });
 
     await fakeAppointmentsRepository.create({
       provider_id: 'provider_id',
       user_id: 'user-id',
-      date: new Date(2020, 4, 20, 17, 0, 0), // Mês começa no Zero
+      date: new Date(year, month, 20, 17, 0, 0), // Mês começa no Zero
     });
 
     await fakeAppointmentsRepository.create({
       provider_id: 'provider_id',
       user_id: 'user-id',
-      date: new Date(2020, 4, 21, 8, 0, 0), // Mês começa no Zero
+      date: new Date(year, month, 21, 8, 0, 0), // Mês começa no Zero
     });
 
     const availability = await listProviderMonthAvailability.execute({
       provider_id: 'provider_id',
-      year: 2020,
-      month: 5,
+      year: year,
+      month: month + 1,  // Mês NÃO começa no Zero
     });
 
     expect(availability).toEqual(
