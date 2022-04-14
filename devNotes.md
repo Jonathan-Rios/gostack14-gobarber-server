@@ -66,3 +66,7 @@
     docker run --name mongodb -p 27017:27017 -d -t mongo
 ## Instalando Redis no Docker
     docker run --name redis -p 6379:6379 -d -t redis:alpine
+
+## Rodar em desenvolvimento
+    yarn dev:server
+    
