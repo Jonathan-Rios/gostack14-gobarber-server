@@ -63,10 +63,12 @@
 ## Instalando PostGres no Docker
     docker run --name gostack-postgres -e POSTGRES_PASSWORD=docker -p 5432:5432 -d postgres
 ## Instalando MongoDB no Docker
-    docker run --name mongodb -p 27017:27017 -d -t mongo
+    docker run -p 27017:27017 -d -t mongo --name gostack-mongodb
 ## Instalando Redis no Docker
-    docker run --name redis -p 6379:6379 -d -t redis:alpine
+    docker run -p 6379:6379 -d -t redis:alpine --name gostack-redis
 
 ## Rodar em desenvolvimento
     yarn dev:server
-    
+    docker start gostack-postgres
+    docker start gostack-redis
+    docker start gostack-mongodb
