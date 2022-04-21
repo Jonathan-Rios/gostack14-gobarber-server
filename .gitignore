@@ -3,15 +3,16 @@
 node_modules/
 build/
 temp/
-
 .env
 ormconfig.json
+coverage.data
+coverage/
+dist
 
 tmp/*
 !tmp/.gitkeep
 !tmp/uploads
-
 tmp/uploads/*
 
-coverage.data
-coverage/
+
+
